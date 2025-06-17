@@ -1,0 +1,57 @@
+<form id="feedbackForm" onsubmit="event.preventDefault(); validateAndSaveFeedback()">
+  <div class="mb-3">
+    <label for="feedbackTitle" class="form-label">Feedback Title</label>
+    <input type="text" id="feedbackTitle" class="form-control" required minlength="5" maxlength="100" />
+    <div class="invalid-feedback">Title must be 5 to 100 characters long.</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="feedbackDesc" class="form-label">Description</label>
+    <textarea id="feedbackDesc" class="form-control" rows="3" required minlength="10" maxlength="500"></textarea>
+    <div class="invalid-feedback">Description must be 10 to 500 characters long.</div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Questions</label>
+    <div id="questionsList"></div>
+    <button type="button" class="btn btn-outline-primary btn-sm mt-2" onclick="addQuestion()">➕ Add Question</button>
+  </div>
+
+  <button type="submit" class="btn btn-success">Save Feedback</button>
+  <button type="button" onclick="backToList()" class="btn btn-secondary ms-2">Cancel</button>
+</form>
+
+<script>
+  function validateAndSaveFeedback() {
+    let isValid = true;
+    const title = $('#feedbackTitle');
+    const desc = $('#feedbackDesc');
+    const titleVal = title.val().trim();
+    const descVal = desc.val().trim();
+
+    title.removeClass('is-invalid');
+    desc.removeClass('is-invalid');
+
+    if (titleVal.length < 5 || titleVal.length > 100) {
+      title.addClass('is-invalid');
+      isValid = false;
+    }
+
+    if (descVal.length < 10 || descVal.length > 500) {
+      desc.addClass('is-invalid');
+      isValid = false;
+    }
+
+    $('#questionsList input').removeClass('is-invalid').each(function () {
+      const val = $(this).val().trim();
+      if (val.length < 5 || val.length > 300) {
+        $(this).addClass('is-invalid');
+        isValid = false;
+      }
+    });
+
+    if (!isValid) return;
+
+    saveFeedbackFromForm();
+  }
+</script>

@@ -1,0 +1,62 @@
+<form id="surveyForm" onsubmit="event.preventDefault(); validateAndSaveSurvey()">
+  <div class="mb-3">
+    <label for="surveyTitle" class="form-label">Survey Title</label>
+    <input type="text" id="surveyTitle" class="form-control" required minlength="5" maxlength="100" />
+    <div class="invalid-feedback">Title must be between 5 and 100 characters.</div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Questions</label>
+    <div id="questionContainer"></div>
+
+    <div class="input-group mb-3">
+      <input type="text" id="newQuestionInput" class="form-control" placeholder="Enter a question" />
+      <button type="button" class="btn btn-outline-primary" onclick="
+        const val = document.getElementById('newQuestionInput').value.trim();
+        if(val.length >= 5 && val.length <= 300){
+          addQuestion(val);
+          document.getElementById('newQuestionInput').value = '';
+        } else {
+          alert('Question must be 5 to 300 characters.');
+        }
+      ">
+        ➕ Add Question
+      </button>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-success">Save Survey</button>
+  <button type="button" class="btn btn-secondary ms-2" onclick="backToSurveyList()">Cancel</button>
+</form>
+
+<script>
+  function validateAndSaveSurvey() {
+    const titleInput = document.getElementById('surveyTitle');
+    const title = titleInput.value.trim();
+    const questions = window.questions || [];
+
+    titleInput.classList.remove('is-invalid');
+    document.querySelectorAll('.invalid-feedback.question-error')?.forEach(e => e.remove());
+
+    let isValid = true;
+
+    if (title.length < 5 || title.length > 100) {
+      titleInput.classList.add('is-invalid');
+      isValid = false;
+    }
+
+    questions.forEach((q, i) => {
+      if (q.length < 5 || q.length > 300) {
+        const qEl = document.querySelector(`#questionContainer .question-item:nth-child(${i + 1})`);
+        if (qEl && !qEl.querySelector('.question-error')) {
+          qEl.insertAdjacentHTML('beforeend', '<div class="invalid-feedback question-error d-block">Each question must be 5–300 characters.</div>');
+        }
+        isValid = false;
+      }
+    });
+
+    if (!isValid) return;
+
+    saveSurvey(title);
+  }
+</script>
