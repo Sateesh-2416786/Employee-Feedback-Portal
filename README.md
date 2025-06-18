@@ -30,12 +30,12 @@ To develop a secure, interactive portal 'Engage360' that enables employees to su
 ## Sprint Release
 - Date: 18/06/2025
 - Sprint 1 includes the following tasks
-    Create an Agile Jira board
-    Create responsive pages
-    Add JavaScript/jQuery validation
-    Set up a GitHub repository
-    Write a shell script that backs up
-    Prepare a checklist for UI
+    - Create an Agile Jira board
+    - Create responsive pages
+    - Add JavaScript/jQuery validation
+    - Set up a GitHub repository
+    - Write a shell script that backs up
+    - Prepare a checklist for UI
 
 ---
 
@@ -65,24 +65,25 @@ Engage360 is a responsive and interactive web portal that allows employees to:
 
 ## Folder Structure
 
-├── doc/                     # Documentation, checklist
-├── emp\_feedback\_portal/    # All HTML files and assets
-│   ├── loginPage.html
-│   ├── employee.html
-│   ├── feedback.html
-│   ├── policies.html
-│   ├── surveys.html
-│   ├── surveyForm.html
-│   ├── responses.html
-│   ├── profile.html
-│   ├── hr.html
-│   ├── hr-feedbackform.html
-│   ├── hr-policies.html
-│   ├── hr-responses.html
-│   ├── hr-surveys.html
-│   ├── hr-surveyform.html
-│   ├── hr-analytics.html
-│   └── hr-profile.html
+
+├── doc/ # Documentation, checklist
+├── emp\_feedback\_portal/ # All HTML files and assets
+│ ├── loginPage.html
+│ ├── employee.html
+│ ├── feedback.html
+│ ├── policies.html
+│ ├── surveys.html
+│ ├── surveyForm.html
+│ ├── responses.html
+│ ├── profile.html
+│ ├── hr.html
+│ ├── hr-feedbackform.html
+│ ├── hr-policies.html
+│ ├── hr-responses.html
+│ ├── hr-surveys.html
+│ ├── hr-surveyform.html
+│ ├── hr-analytics.html
+│ └── hr-profile.html
 
 ---
 
@@ -129,23 +130,23 @@ Engage360 is a responsive and interactive web portal that allows employees to:
 ## Demo
 
 Home Page
-- ![Home-Page-laptop](demoImages/01.jpg)
-- ![Home-Page-mobile](demoImages/02.jpg)
+ ![Home-Page-laptop](demoImages/01.jpg)
+ ![Home-Page-mobile](demoImages/02.jpg)
 
 Policies Page
-- ![Policies-Page-laptop](demoImages/03.jpg)
-- ![Policies-Page-mobile](demoImages/04.jpg)
-- ![Policies-Page-mobile-sidebar](demoImages/05.jpg)
+ ![Policies-Page-laptop](demoImages/03.jpg)
+ ![Policies-Page-mobile](demoImages/04.jpg)
+ ![Policies-Page-mobile-sidebar](demoImages/05.jpg)
 
 HR Login
-- ![HR-Login](demoImages/06.jpg)
+ ![HR-Login](demoImages/06.jpg)
 
 HR Feedback
-- ![HR-Feedback-Page](demoImages/07.jpg)
+ ![HR-Feedback-Page](demoImages/07.jpg)
 
 HR Profile
-- ![HR-Profile](demoImages/08.jpg)
+ ![HR-Profile](demoImages/08.jpg)
 
 HR Policies
-- ![HR-Policies](demoImages/09.jpg)
+ ![HR-Policies](demoImages/09.jpg)
 
