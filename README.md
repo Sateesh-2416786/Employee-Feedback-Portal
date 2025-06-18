@@ -19,25 +19,37 @@ Client-side validation has been added across multiple modules to ensure data int
 
 ### 🔍 Validation Summary (Per File)
 
-| File                 | Validation Rules |
-|----------------------|------------------|
-| `surveys.html`       | - All questions required<br>- Dropdowns must be selected<br>- Comments (if given) must be 10–500 chars<br>- Visual error feedback via Bootstrap |
-| `responses.html`     | - No validation needed<br>- Read-only UI |
-| `profile.html`       | - No validation needed<br>- Displays static profile |
-| `policies.html`      | - Rating required<br>- HTML `required` used for radio groups |
-| `loginPage.html`     | - Email required (with format)<br>- Password required<br>- Role selection optional<br>- Bootstrap visual feedback |
-| `employee.html`      | - No direct validation<br>- Loads `feedback.html` which is validated |
-| `feedback.html`      | - All answers required<br>- Text must be 10–1000 chars<br>- Bootstrap feedback used |
-| `hr-surveys.html`    | - Survey title required (max 100 chars)<br>- Each question required (max 200 chars) |
-| `hr-surveyform.html` | - Maxlength attributes added<br>- Emoji removed from buttons |
-| `hr-responses.html`  | - No form<br>- Sidebar emojis removed<br>- Key fixed from `surveys` → `hrSurveys` |
+| File                    | Validation Rules |
+|-------------------------|------------------|
+| `surveys.html`          | - All questions required<br>- Dropdowns must be selected<br>- Comments (if given) must be 10–500 chars<br>- Visual error feedback via Bootstrap |
+| `responses.html`        | - No validation needed<br>- Read-only UI |
+| `profile.html`          | - No validation needed<br>- Displays static profile |
+| `policies.html`         | - Rating required<br>- HTML `required` used for radio groups |
+| `loginPage.html`        | - Email required (with format)<br>- Password required<br>- Role selection optional<br>- Bootstrap visual feedback |
+| `employee.html`         | - No direct validation<br>- Loads `feedback.html` which is validated |
+| `feedback.html`         | - All answers required<br>- Text must be 10–1000 chars<br>- Bootstrap feedback used |
+| `hr-surveys.html`       | - Survey title required (max 100 chars)<br>- Each question required (max 200 chars) |
+| `hr-surveyform.html`    | - Maxlength attributes added<br>- Emoji removed from buttons |
+| `hr-responses.html`     | - No form<br>- Sidebar emojis removed<br>- Key fixed from `surveys` → `hrSurveys` |
 | `hr-response-list.html` | - Emoji cleanup<br>- Fallback handling<br>- Accessibility improved |
-| `hr-profile.html`    | - Emoji removed<br>- Class typo fixed<br>- Mobile layout polished |
-| `hr-policies.html`   | - Emojis removed<br>- HTML constraints added<br>- Styling polished |
-| `hr-feedbackform.html` | - Maxlength for inputs<br>- Emoji removed<br>- Consistent structure |
-| `hr-analytics.html`  | - Title fixed<br>- Emoji cleanup<br>- Key fix (`surveys` → `hrSurveys`)<br>- Analytics safe checks added |
+| `hr-profile.html`       | - Emoji removed<br>- Class typo fixed<br>- Mobile layout polished |
+| `hr-policies.html`      | - Emojis removed<br>- HTML constraints added<br>- Styling polished |
+| `hr-feedbackform.html`  | - Maxlength for inputs<br>- Emoji removed<br>- Consistent structure |
+| `hr-analytics.html`     | - Title fixed<br>- Emoji cleanup<br>- Key fix (`surveys` → `hrSurveys`)<br>- Analytics safe checks added |
 
 ---
 
-## 📁 Folder Structure
+## 🚀 Technologies Used
 
+- **HTML5** & **CSS3**
+- **JavaScript** & **jQuery**
+- **Bootstrap 5.3**
+- **LocalStorage** for mock data persistence
+
+---
+
+## 🧪 How to Run
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/Sateesh-2416786/Employee-Feedback-Portal.git
