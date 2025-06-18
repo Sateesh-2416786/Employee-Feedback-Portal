@@ -1,0 +1,28 @@
+<form
+  id="surveyForm"
+  onsubmit="event.preventDefault(); saveSurvey(document.getElementById('surveyTitle').value)"
+>
+  <div class="mb-3">
+    <label for="surveyTitle" class="form-label">Survey Title</label>
+    <input type="text" id="surveyTitle" class="form-control" required />
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Questions</label>
+    <div id="questionContainer"></div>
+
+    <div class="input-group mb-3">
+      <input type="text" id="newQuestionInput" class="form-control" placeholder="Enter a question" />
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        onclick="const val = document.getElementById('newQuestionInput').value.trim(); if(val){ addQuestion(val); document.getElementById('newQuestionInput').value = ''; }"
+      >
+        ➕ Add Question
+      </button>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-success">Save Survey</button>
+  <button type="button" class="btn btn-secondary ms-2" onclick="backToSurveyList()">Cancel</button>
+</form>

@@ -1,0 +1,20 @@
+<form id="feedbackForm" onsubmit="event.preventDefault(); saveFeedbackFromForm()">
+  <div class="mb-3">
+    <label for="feedbackTitle" class="form-label">Feedback Title</label>
+    <input type="text" id="feedbackTitle" class="form-control" required />
+  </div>
+
+  <div class="mb-3">
+    <label for="feedbackDesc" class="form-label">Description</label>
+    <textarea id="feedbackDesc" class="form-control" rows="3" required></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Questions</label>
+    <div id="questionsList"></div>
+    <button type="button" class="btn btn-outline-primary btn-sm mt-2" onclick="addQuestion()">➕ Add Question</button>
+  </div>
+
+  <button type="submit" class="btn btn-success">Save Feedback</button>
+  <button type="button" onclick="backToList()" class="btn btn-secondary ms-2">Cancel</button>
+</form>

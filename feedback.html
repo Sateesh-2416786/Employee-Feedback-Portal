@@ -1,0 +1,77 @@
+<div class="card p-4 shadow">
+  <h4 id="feedbackTitle" class="mb-3">Feedback</h4>
+
+  <div id="feedbackAlert" class="alert alert-success d-none" role="alert">
+    Feedback submitted successfully!
+  </div>
+
+  <form id="feedbackForm">
+    <!-- Questions will be dynamically inserted here -->
+    <button type="submit" class="btn btn-success" id="submitFeedbackBtn">
+      Submit Feedback
+    </button>
+  </form>
+</div>
+
+<script>
+  const feedback = window.currentFeedback;
+
+  if (!feedback) {
+    $('#feedbackForm').html('<p class="text-danger">No feedback data found.</p>');
+    throw new Error("Missing feedback data");
+  }
+
+  $('#feedbackTitle').text(feedback.title);
+
+  const $form = $('#feedbackForm');
+  $form.find('button[type="submit"]').before( // insert before submit button
+    feedback.questions.map((q, index) => {
+      const inputId = `question-${index}`;
+      return `
+        <div class="mb-3">
+          <label for="${inputId}" class="form-label">${q.question}</label>
+          <textarea class="form-control" id="${inputId}" name="${inputId}" rows="3" required></textarea>
+        </div>
+      `;
+    }).join('')
+  );
+
+  $form.on('submit', function (e) {
+    e.preventDefault();
+
+    const responses = feedback.questions.map((q, index) => {
+      const inputId = `question-${index}`;
+      return {
+        question: q.question,
+        answer: $(`#${inputId}`).val().trim()
+      };
+    });
+
+    if (responses.some(r => !r.answer)) {
+      alert('Please fill out all questions.');
+      return;
+    }
+
+    const employeeEmail = localStorage.getItem('loggedInEmail');
+    const allResponses = JSON.parse(localStorage.getItem('feedbackResponses') || '[]');
+
+    allResponses.push({
+      feedbackId: feedback.id,
+      feedbackTitle: feedback.title,
+      employeeEmail,
+      submittedAt: new Date().toISOString(),
+      responses
+    });
+
+    localStorage.setItem('feedbackResponses', JSON.stringify(allResponses));
+
+    $('#submitFeedbackBtn').prop('disabled', true);
+    $('#feedbackAlert').removeClass('d-none');
+
+    setTimeout(() => {
+      if (typeof window.backToFeedbackList === 'function') {
+        window.backToFeedbackList();
+      }
+    }, 1500);
+  });
+</script>
