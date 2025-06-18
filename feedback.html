@@ -5,8 +5,7 @@
     Feedback submitted successfully!
   </div>
 
-  <form id="feedbackForm">
-    <!-- Questions will be dynamically inserted here -->
+  <form id="feedbackForm" novalidate>
     <button type="submit" class="btn btn-success" id="submitFeedbackBtn">
       Submit Feedback
     </button>
@@ -24,13 +23,14 @@
   $('#feedbackTitle').text(feedback.title);
 
   const $form = $('#feedbackForm');
-  $form.find('button[type="submit"]').before( // insert before submit button
+  $form.find('button[type="submit"]').before(
     feedback.questions.map((q, index) => {
       const inputId = `question-${index}`;
       return `
         <div class="mb-3">
           <label for="${inputId}" class="form-label">${q.question}</label>
-          <textarea class="form-control" id="${inputId}" name="${inputId}" rows="3" required></textarea>
+          <textarea class="form-control feedback-text" id="${inputId}" name="${inputId}" rows="3" minlength="10" maxlength="1000" required></textarea>
+          <div class="invalid-feedback">Answer must be between 10 and 1000 characters.</div>
         </div>
       `;
     }).join('')
@@ -38,6 +38,19 @@
 
   $form.on('submit', function (e) {
     e.preventDefault();
+    let isValid = true;
+
+    $('.feedback-text').each(function () {
+      const value = $(this).val().trim();
+      if (value.length < 10 || value.length > 1000) {
+        $(this).addClass('is-invalid');
+        isValid = false;
+      } else {
+        $(this).removeClass('is-invalid');
+      }
+    });
+
+    if (!isValid) return;
 
     const responses = feedback.questions.map((q, index) => {
       const inputId = `question-${index}`;
@@ -46,11 +59,6 @@
         answer: $(`#${inputId}`).val().trim()
       };
     });
-
-    if (responses.some(r => !r.answer)) {
-      alert('Please fill out all questions.');
-      return;
-    }
 
     const employeeEmail = localStorage.getItem('loggedInEmail');
     const allResponses = JSON.parse(localStorage.getItem('feedbackResponses') || '[]');

@@ -1,188 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Engage360 – Survey Responses</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <style>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Engage360 – HR Responses</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    .topbar {
+      height: 60px;
+      background-color: #007bff;
+      color: white;
+      padding: 15px 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    .sidebar {
+      height: 100vh;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 220px;
+      background-color: #343a40;
+      color: white;
+      padding-top: 20px;
+    }
+    .sidebar a {
+      color: white;
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+    }
+    .sidebar a:hover {
+      background-color: #495057;
+    }
+    .content {
+      margin-left: 220px;
+      margin-top: 60px;
+      padding: 20px;
+    }
+    #toggleSidebar {
+      display: none;
+    }
+    .active {
+      background: #a1bfceb2 !important;
+    }
+    @media screen and (max-width: 600px) {
       .topbar {
-        height: 60px;
-        background-color: #007bff;
-        color: white;
-        padding: 15px 20px;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000;
+        height: 45px;
+        padding: 10px 10px;
       }
       .sidebar {
-        height: 100vh;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        width: 220px;
-        background-color: #343a40;
-        color: white;
-        padding-top: 20px;
-      }
-      .sidebar a {
-        color: white;
-        display: block;
-        padding: 12px 20px;
-        text-decoration: none;
-      }
-      .sidebar a:hover {
-        background-color: #495057;
-      }
-      .content {
-        margin-left: 220px;
-        margin-top: 60px;
-        padding: 20px;
-      }
-      #toggleSidebar {
+        top: 45px;
         display: none;
       }
-      .active {
-        background: #a1bfceb2 !important;
+      .content {
+        margin-left: 0;
       }
-      @media screen and (max-width: 600px) {
-        .topbar {
-          height: 45px;
-          padding: 10px 10px;
-        }
-        .sidebar {
-          top: 45px;
-          display: none;
-        }
-        .content {
-          margin-left: 0;
-        }
-        #toggleSidebar {
-          display: block;
-        }
+      #toggleSidebar {
+        display: block;
       }
-    </style>
-  </head>
-  <body>
-    <div class="topbar">
-      <h5 class="m-0">Engage360 – Survey Responses</h5>
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <h5 class="m-0">Engage360 – HR Responses</h5>
+  </div>
+
+  <button id="toggleSidebar" class="btn btn-light d-md-none" style="position: fixed; top: 50px; left: 10px; z-index: 1100">
+    ☰
+  </button>
+
+  <div class="sidebar">
+    <a href="hr.html" class="nav-link">📝 HR Feedback</a>
+    <a href="hr-policies.html" class="nav-link">⭐ HR Rate Policies</a>
+    <a href="hr-surveys.html" class="nav-link">📋 HR Surveys</a>
+    <a href="hr-responses.html" class="nav-link active">📩 HR Responses</a>
+    <a href="hr-analytics.html" class="nav-link">📊 HR Analytics</a>
+    <a href="hr-profile.html" class="nav-link">👤 HR Profile</a>
+    <a href="loginPage.html" class="nav-link text-danger mt-3">🚪 Logout</a>
+  </div>
+
+  <div class="content pt-5 mt-4">
+    <div class="container">
+      <h4 class="mb-4">Employee Feedback Responses</h4>
+      <div id="responseContainer"></div>
     </div>
+  </div>
 
-    <button
-      id="toggleSidebar"
-      class="btn btn-light d-md-none"
-      style="position: fixed; top: 50px; left: 10px; z-index: 1100"
-    >
-      ☰
-    </button>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    $("#toggleSidebar").on("click", function () {
+      $(".sidebar").slideToggle().css({ "z-index": 998 });
+    });
 
-    <div class="sidebar">
-      <a href="hr.html" class="nav-link">📝 HR Feedback</a>
-      <a href="hr-policies.html" class="nav-link">⭐ HR Rate Policies</a>
-      <a href="hr-surveys.html" class="nav-link">📋 HR Surveys</a>
-      <a href="hr-responses.html" class="nav-link active">📩 HR Responses</a>
-      <a href="hr-analytics.html" class="nav-link">📊 HR Analytics</a>
-      <a href="hr-profile.html" class="nav-link">👤 HR Profile</a>
-    </div>
+    const responseData = JSON.parse(localStorage.getItem("feedbackResponses") || "[]");
 
-    <div class="content pt-5 mt-4">
-      <h4 id="surveyTitle">Survey Responses</h4>
-      <div id="responseList" class="mt-4"></div>
-    </div>
+    const container = $("#responseContainer");
+    container.empty();
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-      const urlParams = new URLSearchParams(window.location.search);
-      const surveyId = urlParams.get("surveyId");
-
-      const surveys = JSON.parse(localStorage.getItem("surveys")) || [];
-      const responsesData = JSON.parse(localStorage.getItem("responses")) || {};
-
-      const currentSurvey = surveys.find((s) => s.id == surveyId);
-      const responses = responsesData[surveyId] || [];
-
-      function renderResponses() {
-        $("#surveyTitle").text(currentSurvey?.title || "Survey Responses");
-
-        if (responses.length === 0) {
-          $("#responseList").html("<p>No employee responses found.</p>");
-          return;
-        }
-
-        const table = $(`
-          <table class="table table-bordered">
-            <thead class="table-light">
-              <tr>
-                <th>Employee</th>
-                <th>Feedback</th>
-                <th>HR Response</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+    if (responseData.length === 0) {
+      container.append("<p class='text-muted'>No feedback responses submitted yet.</p>");
+    } else {
+      responseData.forEach((res, index) => {
+        const card = $(`
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">${res.feedbackTitle}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">From: ${res.employeeEmail}</h6>
+              <p class="card-text"><small>Submitted at: ${new Date(res.submittedAt).toLocaleString()}</small></p>
+              <hr/>
+              ${res.responses.map((r, i) => `
+                <div class="mb-3">
+                  <label class="form-label">${r.question}</label>
+                  <p class="form-control form-control-sm bg-light">${r.answer}</p>
+                </div>
+              `).join('')}
+              <div class="mb-3">
+                <label class="form-label">HR Response</label>
+                <textarea class="form-control form-control-sm hr-response" rows="2" minlength="10" maxlength="1000">${res.hrResponse || ""}</textarea>
+              </div>
+              <div class="text-end">
+                <button class="btn btn-sm btn-primary respond-btn" data-index="${index}">Submit Response</button>
+              </div>
+            </div>
+          </div>
         `);
 
-        responses.forEach((res, index) => {
-          const isResponded = res.status === "responded";
+        container.append(card);
+      });
+    }
 
-          const row = $(`
-            <tr>
-              <td>${res.name}</td>
-              <td>${res.feedback}</td>
-              <td>
-                <textarea class="form-control form-control-sm" rows="2">${res.hrResponse || ""}</textarea>
-              </td>
-              <td class="status">${res.status}</td>
-              <td>
-                <button class="btn btn-${isResponded ? "secondary" : "primary"} btn-sm respond-btn">
-                  ${isResponded ? "Edit Response" : "Respond"}
-                </button>
-              </td>
-            </tr>
-          `);
+    $(document).on("click", ".respond-btn", function () {
+      const index = $(this).data("index");
+      const card = $(this).closest(".card");
+      const textarea = card.find(".hr-response");
+      const responseText = textarea.val().trim();
 
-          row.find(".respond-btn").on("click", function () {
-            const textarea = row.find("textarea");
-            const newResponse = textarea.val().trim();
+      textarea.removeClass("is-invalid");
+      card.find(".invalid-feedback").remove();
 
-            if (!newResponse) {
-              alert("Please enter a response before submitting.");
-              return;
-            }
-
-            responses[index].hrResponse = newResponse;
-            responses[index].status = "responded";
-
-            // Save back to localStorage
-            responsesData[surveyId] = responses;
-            localStorage.setItem("responses", JSON.stringify(responsesData));
-
-            // Update UI
-            row.find(".status").text("responded");
-            $(this)
-              .removeClass("btn-primary")
-              .addClass("btn-secondary")
-              .text("Edit Response");
-          });
-
-          table.find("tbody").append(row);
-        });
-
-        $("#responseList").html(table);
+      if (responseText.length < 10 || responseText.length > 1000) {
+        textarea.addClass("is-invalid");
+        textarea.after('<div class="invalid-feedback d-block">Response must be 10–1000 characters long.</div>');
+        return;
       }
 
-      $(document).ready(() => {
-        renderResponses();
-        $("#toggleSidebar").on("click", function () {
-          $(".sidebar").slideToggle().css({ "z-index": 998 });
-        });
-      });
-    </script>
-  </body>
+      responseData[index].hrResponse = responseText;
+      localStorage.setItem("feedbackResponses", JSON.stringify(responseData));
+
+      $(this).text("Response Saved").removeClass("btn-primary").addClass("btn-success");
+    });
+  </script>
+</body>
 </html>
