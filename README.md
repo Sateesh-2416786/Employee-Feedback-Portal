@@ -65,7 +65,7 @@ Engage360 is a responsive and interactive web portal that allows employees to:
 
 ## Folder Structure
 
-
+```
 ├── doc/ # Documentation, checklist
 ├── emp\_feedback\_portal/ # All HTML files and assets
 │ ├── loginPage.html
@@ -84,7 +84,7 @@ Engage360 is a responsive and interactive web portal that allows employees to:
 │ ├── hr-surveyform.html
 │ ├── hr-analytics.html
 │ └── hr-profile.html
-
+```
 ---
 
 ## Files
